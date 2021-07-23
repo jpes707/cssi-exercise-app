@@ -1,0 +1,14 @@
+.exercise{
+    color: white;
+    background-color: #b08dc7;
+    border-color: none;
+    padding: 5px;
+    margin: 10px;
+    width: 110px;
+  }
+  
+  #duration{
+    width: 5%;
+    margin: 2px;
+  }
+  
