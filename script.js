@@ -1,3 +1,15 @@
+const api_id = '99057361'
+const api_key = '1df7869712abb0a0b446923862e0f733'
+const url = 'https://trackapi.nutritionix.com/v2/natural/exercise'
+
+
+const headers = {
+    'Content-Type': 'application/json',
+    'x-app-id': api_id,
+    'x-app-key': api_key,
+    'x-remote-user-id': '0'
+}
+
 let exercise;
 let duration;
 
@@ -17,35 +29,14 @@ const getExercise = (activity) => {
 const getDuration = () => { // runs when you click save changes
   duration = time.value
   console.log(exercise, duration)
-  modalDiv.classList.remove("is-active");
-}
-
-const cancel = () => {
-  modalDiv.classList.remove("is-active");
-  duration.value = ""
-}
-
-
-const api_id = '99057361'
-const api_key = '1df7869712abb0a0b446923862e0f733'
-const url = 'https://trackapi.nutritionix.com/v2/natural/exercise'
-
-
-const headers = {
-    'Content-Type': 'application/json',
-    'x-app-id': api_id,
-    'x-app-key': api_key,
-    'x-remote-user-id': '0'
-}
-
-let query = {
-    "query": "ran 3 miles and then walked 4 kilometers",
+  let query = {
+    "query": `${exercise} for ${duration} minutes`,
     /*"gender": "female",
     "weight_kg": 72.5,
     "height_cm": 167.64,
     "age": 30*/
 }
-
+  console.log(query)
 fetch(url, {
         "headers": headers,
         "body": JSON.stringify(query),
@@ -86,3 +77,17 @@ fetch(url, {
   })
         
     });
+  modalDiv.classList.remove("is-active");
+}
+
+const cancel = () => {
+  modalDiv.classList.remove("is-active");
+  duration.value = ""
+}
+
+
+
+
+
+
+
