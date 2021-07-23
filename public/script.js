@@ -1,13 +1,11 @@
 let calorie_count = 0;
 
-
-
 const messagesRef = firebase.database().ref();
-    messagesRef.on('value', (snapshot) => {
-        const data = snapshot.val();
-        for (let key in data) {
+messagesRef.on('value', (snapshot) => {
+    const data = snapshot.val();
+    for (let key in data) {
 
-            let card = `
+        let card = `
             <div class="card">
                <div class="card-content">
                   <div class="content">
@@ -31,25 +29,14 @@ const messagesRef = firebase.database().ref();
                </div>
             </div>
                             `;
-              
-
-                            calorie_count += data[key].calories;
-                            document.getElementById("calorie-header").innerHTML = Math.round(calorie_count) + " calories burned and counting!";
-                    document.getElementById("cards").innerHTML = card + document.getElementById("cards").innerHTML;
-        }
-    });
 
 
+        calorie_count += data[key].calories;
 
-
-
-
-
-
-
-
-
-
+        document.getElementById("cards").innerHTML = card + document.getElementById("cards").innerHTML;
+        document.getElementById("calorie-header").innerHTML = Math.round(calorie_count) + " calories burned and counting!";
+    }
+});
 
 
 
@@ -73,50 +60,48 @@ const modalDiv = document.querySelector("#modal");
 const time = document.querySelector("#duration")
 
 const openModal = () => {
-  console.log("clicked")
-  modalDiv.classList.add("is-active");
+    console.log("clicked")
+    modalDiv.classList.add("is-active");
 }
 
 const getExercise = (activity) => {
-  exercise = activity
-  console.log(activity, exercise)
+    exercise = activity
+    console.log(activity, exercise)
 }
 
 const getDuration = () => { // runs when you click save changes
-  duration = time.value
-  console.log(exercise, duration)
-  let query = {
-    "query": `${exercise} for ${duration} minutes`,
-    /*"gender": "female",
-    "weight_kg": 72.5,
-    "height_cm": 167.64,
-    "age": 30*/
-}
-  console.log(query)
-fetch(url, {
-        "headers": headers,
-        "body": JSON.stringify(query),
-        "method": "POST"
-    })
-    .then(response => response.json())
-    .then(myJson => {
-        console.log(myJson);
-
-    console.log("on submit")
-
-
-  myJson.exercises.forEach(exercise => {
-
-    const payload = {
-        name: exercise.name,
-        duration: exercise.duration_min,
-        calories: exercise.nf_calories
+    duration = time.value
+    console.log(exercise, duration)
+    let query = {
+        "query": `${exercise} for ${duration} minutes`,
+        /*"gender": "female",
+        "weight_kg": 72.5,
+        "height_cm": 167.64,
+        "age": 30*/
     }
-    firebase.database().ref().push(payload)
+    console.log(query)
+    fetch(url, {
+            "headers": headers,
+            "body": JSON.stringify(query),
+            "method": "POST"
+        })
+        .then(response => response.json())
+        .then(myJson => {
+            console.log(myJson);
 
-    calorie_count += exercise.nf_calories;
+            console.log("on submit")
 
-    let card = `
+
+            myJson.exercises.forEach(exercise => {
+
+                const payload = {
+                    name: exercise.name,
+                    duration: exercise.duration_min,
+                    calories: exercise.nf_calories
+                }
+                firebase.database().ref().push(payload)
+
+                let card = `
 <div class="card">
    <div class="card-content">
       <div class="content">
@@ -140,21 +125,17 @@ fetch(url, {
    </div>
 </div>
                 `;
-  
-        document.getElementById("cards").innerHTML = card + document.getElementById("cards").innerHTML;
-        document.getElementById("calorie-header").innerHTML = Math.round(calorie_count) + " calories burned and counting!";
-  })
-        
-    });
-  modalDiv.classList.remove("is-active");
+
+                calorie_count /= 2;
+                document.getElementById("cards").innerHTML = card + document.getElementById("cards").innerHTML;
+                document.getElementById("calorie-header").innerHTML = Math.round(calorie_count) + " calories burned and counting!";
+            })
+
+        });
+    modalDiv.classList.remove("is-active");
 }
 
 const cancel = () => {
-  modalDiv.classList.remove("is-active");
-  duration.value = ""
+    modalDiv.classList.remove("is-active");
+    duration.value = ""
 }
-
-
-
-
-
