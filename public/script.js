@@ -1,3 +1,57 @@
+const messagesRef = firebase.database().ref();
+    messagesRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        for (let key in data) {
+            if (key === passcode.value) {
+                const message = document.querySelector('#message');
+                message.innerHTML = data[key].message;
+            }
+
+
+            let card = `
+            <div class="card">
+               <div class="card-content">
+                  <div class="content">
+                  <nobr>
+                    <div class="column">
+                       <h1>
+                          ${data[key].name}
+                       </h1>
+                     </div>
+                     <div class="column">
+                       <h1>
+                          ${data[key].duration} minutes
+                       </h1>
+                     </div></nobr>
+                     <div class="column">
+                       <h1>
+                          ${data[key].calories} calories burned!
+                       </h1>
+                     </div>
+                  </div>
+               </div>
+            </div>
+                            `;
+              
+                    document.getElementById("cards").innerHTML = card + document.getElementById("cards").innerHTML;
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const api_id = '99057361'
 const api_key = '1df7869712abb0a0b446923862e0f733'
 const url = 'https://trackapi.nutritionix.com/v2/natural/exercise'
