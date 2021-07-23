@@ -1,12 +1,11 @@
+let calorie_count = 0;
+
+
+
 const messagesRef = firebase.database().ref();
     messagesRef.on('value', (snapshot) => {
         const data = snapshot.val();
         for (let key in data) {
-            if (key === passcode.value) {
-                const message = document.querySelector('#message');
-                message.innerHTML = data[key].message;
-            }
-
 
             let card = `
             <div class="card">
@@ -33,6 +32,9 @@ const messagesRef = firebase.database().ref();
             </div>
                             `;
               
+
+                            calorie_count += data[key].calories;
+                            document.getElementById("calorie-header").innerHTML = Math.round(calorie_count) + " calories burned and counting!";
                     document.getElementById("cards").innerHTML = card + document.getElementById("cards").innerHTML;
         }
     });
@@ -112,6 +114,8 @@ fetch(url, {
     }
     firebase.database().ref().push(payload)
 
+    calorie_count += exercise.nf_calories;
+
     let card = `
 <div class="card">
    <div class="card-content">
@@ -138,7 +142,7 @@ fetch(url, {
                 `;
   
         document.getElementById("cards").innerHTML = card + document.getElementById("cards").innerHTML;
-    
+        document.getElementById("calorie-header").innerHTML = Math.round(calorie_count) + " calories burned and counting!";
   })
         
     });

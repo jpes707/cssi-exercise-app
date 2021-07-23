@@ -6,14 +6,11 @@
       You won't see what's in the head in the page
       Scroll down to the body element for the page content
     -->
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="/__/firebase/8.8.0/firebase-app.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-
-    <!-- Initialize Firebase -->
-    <script src="/__/firebase/init.js"></script>
+     <!-- The core Firebase JS SDK is always required and must be listed first -->
+     <script defer src="/__/firebase/8.3.1/firebase-app.js"></script>
+     <!-- include only the Firebase features as you need -->
+     <script defer src="/__/firebase/8.3.1/firebase-database.js"></script>
+     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -44,7 +41,8 @@
           <h1 class="title" id="header">
             Your workout history
           </h1>
-          <img id="location-img" />
+          <h2 class="subtitle" id="calorie-header">
+          </h2>
           <br />
           <br />
           <button class = "button is-primary modal-button" onclick="openModal()">Log new workout</button>
