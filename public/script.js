@@ -100,7 +100,18 @@ fetch(url, {
     .then(myJson => {
         console.log(myJson);
 
+    console.log("on submit")
+
+
   myJson.exercises.forEach(exercise => {
+
+    const payload = {
+        name: exercise.name,
+        duration: exercise.duration_min,
+        calories: exercise.nf_calories
+    }
+    firebase.database().ref().push(payload)
+
     let card = `
 <div class="card">
    <div class="card-content">
@@ -138,8 +149,6 @@ const cancel = () => {
   modalDiv.classList.remove("is-active");
   duration.value = ""
 }
-
-
 
 
 
